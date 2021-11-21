@@ -15,27 +15,18 @@ from ygo_client.connection.enums.game_message import GameMessage
 logger = logging.getLogger(__name__)
 
 class GameClient:
-    _name: str
-    _version: int
     _connection: YGOConnection
     _gamemanager: GameManager
+    _name: str
+    _version: int
 
     def __init__(
-        self, 
-        name: str,
-        version: int, 
+        self,  
         executor: DuelExecutor,
         deck: Deck
     ) -> None:
-        self._name = name
-        self._version = version
         self._connection = YGOConnection()
         self._gamemanager = GameManager(deck, executor)
-
-
-    @property
-    def version(self) -> int:
-        return self._version
 
     
     def get_deck(self) -> Deck:
@@ -46,7 +37,15 @@ class GameClient:
         return self._gamemanager.duel
 
 
-    async def connect(self, host: str, port: int) -> None:
+    async def connect(
+        self,
+        host: str, 
+        port: int,
+        name: str,
+        version: int
+    ) -> None:
+        self._name = name
+        self._version = version
         await self._connection.connect(host, port)
         if self._connection.is_connected():
             self._on_connected()
