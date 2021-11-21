@@ -1,0 +1,5 @@
+git+https://github.com/hinihatetsu/ygo-core-python
+
+
+# For test
+mypy
